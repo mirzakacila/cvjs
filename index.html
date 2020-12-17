@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mirza Kacila</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	<nav class="navbar navbar-default">
+  		<div class="container-fluid">
+    		<div class="navbar-header">
+      			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+      			</button>
+    		</div>
+    		<div class="collapse navbar-collapse" id="myNavbar">
+      			<ul class="nav navbar-nav">
+        			<li><a href="index.html">Home</a></li>
+        			<li><a href="blog.html">Blog</a></li>
+        			<li><a href="gallery.html">Gallery</a></li>
+        		</ul>
+      		</div>
+  	    </div>
+	</nav>
+
+
+	<canvas id="canvas" width="100" height="100"
+		style="background-color:transparent;">
+	</canvas>
+	<script>
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+		var radius = canvas.height / 2;
+		ctx.translate(radius, radius);
+		radius = radius * 0.90
+		setInterval(drawClock, 1000);
+
+		function drawClock() {
+			drawFace(ctx, radius);
+  			drawNumbers(ctx, radius);
+  			drawTime(ctx, radius);
+		}
+
+		function drawFace(ctx, radius) {
+  			var grad;
+  			ctx.beginPath();
+  			ctx.arc(0, 0, radius, 0, 2*Math.PI);
+  			ctx.fillStyle = 'white';
+  			ctx.fill();
+  			grad = ctx.createRadialGradient(0,0,radius*0.95, 0,0,radius*1.05);
+  			grad.addColorStop(0, '#333');
+  			grad.addColorStop(0.5, 'white');
+  			grad.addColorStop(1, '#333');
+  			ctx.strokeStyle = grad;
+  			ctx.lineWidth = radius*0.1;
+  			ctx.stroke();
+  			ctx.beginPath();
+  			ctx.arc(0, 0, radius*0.1, 0, 2*Math.PI);
+  			ctx.fillStyle = '#333';
+  			ctx.fill();
+		}	
+
+		function drawNumbers(ctx, radius) {
+  			var ang;
+  			var num;
+  			ctx.font = radius*0.15 + "px arial";
+  			ctx.textBaseline="middle";
+  			ctx.textAlign="center";
+  			for(num = 1; num < 13; num++){
+    			ang = num * Math.PI / 6;
+    			ctx.rotate(ang);
+    			ctx.translate(0, -radius*0.85);
+    			ctx.rotate(-ang);
+    			ctx.fillText(num.toString(), 0, 0);
+    			ctx.rotate(ang);
+    			ctx.translate(0, radius*0.85);
+    			ctx.rotate(-ang);
+  			}	
+		}
+
+		function drawTime(ctx, radius){
+    		var now = new Date();
+    		var hour = now.getHours();
+    		var minute = now.getMinutes();
+    		var second = now.getSeconds();
+    		//hour
+    		hour=hour%12;
+    		hour=(hour*Math.PI/6)+
+    		(minute*Math.PI/(6*60))+
+    		(second*Math.PI/(360*60));
+    		drawHand(ctx, hour, radius*0.5, radius*0.07);
+    		//minute
+    		minute=(minute*Math.PI/30)+(second*Math.PI/(30*60));
+    		drawHand(ctx, minute, radius*0.8, radius*0.07);
+		    // second
+		    second=(second*Math.PI/30);
+		    drawHand(ctx, second, radius*0.9, radius*0.02);
+		}
+
+	function drawHand(ctx, pos, length, width) {
+	    ctx.beginPath();
+	    ctx.lineWidth = width;
+	    ctx.lineCap = "round";
+	    ctx.moveTo(0,0);
+	    ctx.rotate(pos);
+	    ctx.lineTo(0, -length);
+	    ctx.stroke();
+	    ctx.rotate(-pos);
+	}
+</script>
+
+
+
+
+
+
+	<p id="demo">Countdown starts!</p>
+	<p id="demo">Countdown for finals!</p>
+   	<div id="sat" class="container">
+		<script>
+			// Set the date when the event ends
+			var countDownDate = new Date("Jan 16, 2021 00:00:00").getTime();
+
+			// Update the count down every 1 second
+			var x = setInterval(function() {
+
+			// Get today's date and time
+			var now = new Date().getTime();
+
+			// Find the distance between now and the count down date
+			var distance = countDownDate - now;
+
+			// Time calculations for days, hours, minutes and seconds
+			var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+			var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+			var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+			// Output the result in an element with id="demo"
+			document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+			+ minutes + "m " + seconds + "s ";
+
+			// If the count down is over, write some text 
+			if (distance < 0) {
+			clearInterval(x);
+			document.getElementById("demo").innerHTML = "Finals now!";
+			}
+			}, 1000);
+		</script>
+	</div>
+
+
+
+		<div class="darkbtn">
+			<button  onclick="myFunction()">Dark mode</button>
+				<script>
+					function myFunction() {
+						var element = document.body;
+						element.classList.toggle("dark-mode");
+					}
+				</script>
+		</div>
+
+	<div class="container">
+		<div class="jumbotron">
+			<div class="row">
+				<div class="col-sm-3">
+					<img src="images/svslika.jpg" style="width:100%;">
+				</div>
+
+				<div class="col-sm-3">
+					<h2 id="abt">About me</h2>
+					<p><b>Citizenship:</b> Sweeden and Bosnian and herzegovinia<br>
+						<b>Sex:</b> Male<br>
+						<b>Date of birth:</b> 02.01.1997<br>
+						<b>Driving licence:</b> Category B<br>
+						<b>Language skills:</b> English, Bosnian and herzegovinian and German</p>
+				</div>
+
+				<div class="col-sm-3">
+					<h2 id="abt">Edu&Skills</h2>
+					<p><b>Elementary school:</b> JU OŠ Kovačići : 2004 - 2011<br>
+					   <b>High School:</b> Prva bošnjačka gimnazija Sarajevo: 2012 - 2015<br>
+					<b>University:</b> International faculty of Sarajevo 2018 - Today</p>
+
+
+				</div>
+
+				<div class="col-sm-3">
+					<h2 id="abt">Experience</h2>
+					<p> <b>a-Net:</b> 2018 - 3 motnths practice<br>
+						<b>Catering:</b> 2016 - Hotel Orange: 4 months waiter<br>
+						<b>Sales:</b> 2020 - E-shop 1 year salesman</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+		
+
+
+	<div class="container" id="forma">
+    <h3>Contact me</h3>
+    <form action="/action_page.php">
+      <div class="form-group">
+        <label for="email">Email address:</label>
+        <input type="email" class="form-control" id="email">
+      </div>
+      <div class="form-group">
+        <label for="name">First name:</label>
+        <input type="text" class="form-control" id="name">
+      </div>
+      <div class="form-group">
+        <label for="lname">Last name:</label>
+        <input type="text" class="form-control" id="lname">
+      </div>
+      <div class="form-group">
+        <label for="message">Message:</label>
+        <textarea class="form-control" placeholder="Type something here..." name="message" rows="5" cols="10"></textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </div>
+    </form>
+  	</div>
+
+  <footer id="foot">
+  	<div class="container-fluid text-center">
+  		<a href="https://www.facebook.com/kacilamirza" class="fa fa-facebook"></a>
+  		<a href="https://www.instagram.com/kacilamirza/?hl=en" class="fa fa-instagram"></a><br>
+  		<a href="#top" class="btn btn-info" role="button">Back to top</a>
+  	</div>
+  </footer>
+</body>
+</html>
